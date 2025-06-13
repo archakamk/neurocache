@@ -25,9 +25,13 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
     "@types/node": "^24.0.1",
+    "@types/node-fetch": "^2.6.12",
     "@types/vscode": "^1.101.0",
+    "typescript": "^5.8.3",
     "vscode": "^1.1.37"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }
