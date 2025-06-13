@@ -1,12 +1,7 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelWithLMHead
 
-def load_model():
-    tokenizer = AutoTokenizer.from_pretrained("codeparrot/codeparrot-small")
-    model = AutoModelForCausalLM.from_pretrained("codeparrot/codeparrot-small")
-    model.eval()
-    return tokenizer, model
+tokenizer = AutoTokenizer.from_pretrained("codeparrot/codeparrot-small")
+model = AutoModelWithLMHead.from_pretrained("codeparrot/codeparrot-small")
 
-def generate_completion(code, tokenizer, model):
-    inputs = tokenizer(code, return_tensors="pt", truncation=True, max_length=512)
-    outputs = model.generate(**inputs, max_new_tokens=20)
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+inputs = tokenizer("def hello_world():", return_tensors="pt")
+outputs = model(**inputs)
