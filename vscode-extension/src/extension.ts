@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     const position = editor.selection.active;
     const lineText = document.lineAt(position.line).text;
 
-    vscode.window.setStatusBarMessage('🧠 NeuroCache is thinking...', 3000);
+    vscode.window.setStatusBarMessage('NeuroCache is thinking...', 3000);
 
     try {
       const completion = await fetchCompletion(lineText);
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
         editBuilder.insert(position, completion);
       });
 
-      vscode.window.setStatusBarMessage('✅ NeuroCache completion inserted!', 3000);
+      vscode.window.setStatusBarMessage('NeuroCache completion inserted!', 3000);
 
     } catch (err: any) {
       vscode.window.showErrorMessage('Error fetching completion: ' + err.message);
