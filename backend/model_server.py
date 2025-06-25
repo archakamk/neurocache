@@ -21,7 +21,7 @@ async def complete(request: Request):
     with torch.no_grad():
         outputs = model.generate(
             inputs,
-            max_new_tokens=30,
+            max_new_tokens=20,
             do_sample=True,
             temperature=0.8,
             top_k=50,
