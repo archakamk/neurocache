@@ -5,9 +5,8 @@ import torch
 app = FastAPI()
 
 # Load model + tokenizer once at startup
-model_name = "codeparrot/codeparrot-small"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained("codeparrot/codeparrot-small")
+model = AutoModelForCausalLM.from_pretrained("codeparrot/codeparrot-small")
 model.eval()
 
 @app.post("/complete")
@@ -22,15 +21,18 @@ async def complete(request: Request):
     with torch.no_grad():
         outputs = model.generate(
             inputs,
-            max_new_tokens=20,
+            max_new_tokens=30,
             do_sample=True,
             temperature=0.8,
             top_k=50,
             top_p=0.95
         )
 
-    # Extract the newly generated text only
+    # Extract newly generated tokens only
     new_tokens = outputs[0][inputs.shape[-1]:]
     completion = tokenizer.decode(new_tokens, skip_special_tokens=True)
+
+    # Truncate completion after first newline for cleaner output
+    completion = completion.split('\n')[0]
 
     return {"completion": completion}
